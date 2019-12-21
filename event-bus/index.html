@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="event_bus.js"></script>
+
+<button onclick="handler()">Try it</button>
+
+<button onclick="yab()">Timeout test</button>
+
+<script>
+function handler() {
+    eventBus.register((arg) => {console.log(arg)}, "trigger")
+	 for (let i = 0; i < 30; i++) {
+		 console.log(i)
+         setTimeout(handleBatch, 10)
+     }
+	 
+}
+
+function handleBatch() {
+	for (let i = 0; i < 1000; i++){
+        setTimeout(handleSubBatch, 1)
+	}
+}
+
+function handleSubBatch(){
+	for (let i = 0; i < 100; i++) {
+        setTimeout(function(){
+            eventBus.event("trigger", "event {i} triggered")
+        }, 1)
+	}
+} 
+
+function yab() {
+    console.log("timeout worked")
+}
+</script>
+
+</body>
+</html>
